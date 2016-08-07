@@ -2,6 +2,9 @@
 // Copyrights (c) 2016 Seditio 🍂 INC. All rights reserved.
 // -----------------------------------------------------------
 
+using System;
+using System.ComponentModel;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -24,16 +27,48 @@ namespace AyriaDesktop
             // TODO: Placeholder event.
 
             // Adding random data
-            ClassListBox.Items.Add("ScannedGame1");
-            ClassListBox.Items.Add("ScannedGame2");
-            ClassListBox.Items.Add("ScannedGame3");
-            ClassListBox.Items.Add("ScannedGame4");
-            ClassListBox.Items.Add("ScannedGame5");
-            ClassListBox.Items.Add("ScannedGame6");
-            ClassListBox.Items.Add("ScannedGame7");
-            ClassListBox.Items.Add("ScannedGame8");
-            ClassListBox.Items.Add("ScannedGame9");
-            ClassListBox.Items.Add("ScannedGame10");
+            GameListBox.Items.Add("ScannedGame1");
+            GameListBox.Items.Add("ScannedGame2");
+            GameListBox.Items.Add("ScannedGame3");
+            GameListBox.Items.Add("ScannedGame4");
+            GameListBox.Items.Add("ScannedGame5");
+            GameListBox.Items.Add("ScannedGame6");
+            GameListBox.Items.Add("ScannedGame7");
+            GameListBox.Items.Add("ScannedGame8");
+            GameListBox.Items.Add("ScannedGame9");
+            GameListBox.Items.Add("ScannedGame10");
+        }
+
+        private void WindowLoaded()
+        {
+            SmoothTransition();
+        }
+
+        private void SmoothTransition()
+        {
+            Thread.Sleep(new Random().Next(500, 2000)); // Fake loading time, appreciated the gif.
+
+            var i = 0;
+            do
+            {
+                try
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        Content.Opacity = Content.Opacity + .1F;
+                        GameList.Opacity = GameList.Opacity + .1F;
+                        Loading.Opacity = Loading.Opacity - .1F;
+                    });
+                }
+                catch(Exception)
+                {
+                    // Ignored
+                }
+
+                i++;
+                Thread.Sleep(50);
+            }
+            while(i != 10000);
         }
 
         private void GameListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -70,6 +105,16 @@ namespace AyriaDesktop
             }
 
             flyout.IsOpen = !flyout.IsOpen;
+        }
+
+        private void MWindow_ContentRendered(object sender, EventArgs e)
+        {
+            new Thread(WindowLoaded).Start();
+        }
+
+        private void MWindow_Closing(object sender, CancelEventArgs e)
+        {
+            Environment.Exit(0); // Remaining threads just need to fucking die.
         }
     }
 }
