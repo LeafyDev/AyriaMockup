@@ -106,11 +106,8 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <ListBox x:Name="ClassListBox" SelectionChanged="GameListBox_SelectionChanged" />
-                    <Rectangle Grid.Row="1"
-                               Grid.Column="0"
-                               Fill="{DynamicResource PrimaryHueMidBrush}" />
+                    <Rectangle Grid.Row="1" Fill="{DynamicResource PrimaryHueMidBrush}" />
                     <TextBlock Grid.Row="1"
-                               Grid.Column="0"
                                Margin="5"
                                VerticalAlignment="Center"
                                FontFamily="Roboto"
@@ -138,19 +135,18 @@
                                                  Height="24"
                                                  Kind="Refresh" />
                     </Button>
-                    <!-- TODO: VS seems to like placing these buttons before the rectangle and therefore they go under, and are then invisible... can't find why, maybe it's VS, maybe ReSharper... idk, but if your buttons disappear, check the order here... -->
                 </Grid>
             </Border>
         </materialDesign:DialogHost>
 
-        <Border Grid.Row="0" 
+        <Border Grid.Row="0"
                 Grid.RowSpan="3"
-                Grid.Column="1" 
+                Grid.Column="1"
+                Margin="10,70,10,60"
                 BorderBrush="{DynamicResource PrimaryHueMidBrush}"
                 BorderThickness="1"
-                ClipToBounds="True"
-                Margin="10,70,10,60">
-            <Image Source="http://kids.nationalgeographic.com/content/dam/kids/photos/animals/Mammals/H-P/hedgehog-closeup.jpg" Stretch="Fill"/>
+                ClipToBounds="True">
+            <Image Source="http://kids.nationalgeographic.com/content/dam/kids/photos/animals/Mammals/H-P/hedgehog-closeup.jpg" Stretch="Fill" />
         </Border>
     </Grid>
 </controls:MetroWindow>
